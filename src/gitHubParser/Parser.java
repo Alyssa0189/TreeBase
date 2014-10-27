@@ -1,6 +1,7 @@
 package gitHubParser;
 
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -13,6 +14,7 @@ import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.XML;
 
 import com.google.gson.JsonArray;
 
@@ -20,7 +22,7 @@ import com.google.gson.JsonArray;
 public class Parser {
 	
 static List<RepositoryCommit> commitList;
-
+private static JSONObject mainJSON;
 
 public Parser(){
 	
@@ -33,8 +35,17 @@ public Parser(){
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		jsonBuilder(commitList);
+		
+			jsonBuilder(commitList);
+			
+			try {
+				writeToFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}});
+
 	
 }
 
@@ -62,7 +73,7 @@ public static void getRepo(GitHubClient client) throws IOException{
 
 public static JSONObject jsonBuilder(List<RepositoryCommit> list){
 	
-	JSONObject mainJSON = new JSONObject();
+		mainJSON = new JSONObject();
 	
 	for(int i = 0; i < 5; i++){
 		JSONObject commitsingle = new JSONObject();
@@ -80,9 +91,30 @@ public static JSONObject jsonBuilder(List<RepositoryCommit> list){
 		mainJSON.put("commitNumber" + Integer.toString(i), commitarray);
 	}
 	
+	String xml = XML.toString(mainJSON);
+
+    
 	//Example of the JSON being produced
 	System.out.println(mainJSON.toString());
 	return mainJSON;
+}
+
+public void writeToFile() throws IOException{
+	
+    FileWriter file = new FileWriter("src/gitHubParser/jsonastxt.txt");
+    try {
+        file.write(mainJSON.toString());
+        System.out.println("Successfully turned JSON into text file.");
+        System.out.println("\nJSON Object: " + mainJSON);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+
+    } finally {
+        file.flush();
+        file.close();
+    }
+    
 }
 
 }
