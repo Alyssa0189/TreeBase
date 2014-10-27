@@ -1,0 +1,17 @@
+<project default="all">
+
+<taskdef name="jcsc" classname="rj.tools.jcsc.ant.JCSCTask"/>
+
+<property environment="env"/>
+
+<target name="all">
+	<mkdir dir="./jcsc-output/${output}"/>
+	<jcsc destdir="./jcsc-output/${output}"
+		copyassociatedfiles="true"
+		jcschome="${env.JCSC_HOME}">
+	<fileset dir="./codebase" 
+		includes="**/*.java"/>
+  </jcsc>
+</target>
+
+</project>
