@@ -14,7 +14,7 @@ contribCeiling = 30.0   # This number of contributions or higher will result in 
 
 greenestTreeColor = (0.0, 0.588, 0.0)
 deadestTreeColor = (0.98, 0.588, 0.0)
-badQualityCeiling = 2000.0    # Code of quality this bad or greater will result in the deadest tree.
+badQualityCeiling = 50.0    # Code of quality this bad or greater will result in the deadest tree.
 
 
 # Set the command to evaluate tree creation.  The tree's 'height' should go between these commands.
