@@ -59,9 +59,9 @@ public class fuser {
 			ArrayList<String> listOfViolations, ArrayList<String> commitList2)
 			throws Exception {
 		FileWriter writeCqFile = new FileWriter(
-				"src/codequality/codequalityoutput.xml");
+				"src/codequality/codequalityoutput.txt");
 		FileWriter writeCommitNumFile = new FileWriter(
-				"src/numberofcommits/numberofcommitsoutput.xml");
+				"src/numberofcommits/numberofcommitsoutput.txt");
 
 		BufferedWriter write1 = new BufferedWriter(writeCqFile);
 		BufferedWriter write2 = new BufferedWriter(writeCommitNumFile);
