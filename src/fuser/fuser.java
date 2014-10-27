@@ -11,8 +11,8 @@ public class fuser {
 	static ArrayList<String> numberOfCommitList = new ArrayList<String>();
 
 	public static void main(String[] args) throws Exception {
-		File codeQualityFolder = new File("fuser/codequality");
-		File numberOfCommitsFolder = new File("fuser/numberofcommits");
+		File codeQualityFolder = new File("src/codequality");
+		File numberOfCommitsFolder = new File("src/numberofcommits");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
 		File[] listOfCommitFiles = numberOfCommitsFolder.listFiles();
 		for (File file : listOfCodeQualityFiles) {
@@ -55,9 +55,9 @@ public class fuser {
 			ArrayList<String> listOfViolations, ArrayList<String> commitList2)
 			throws Exception {
 		FileWriter writeCqFile = new FileWriter(
-				"fuser/codequality/codequalityoutput.xml");
+				"src/codequality/codequalityoutput.xml");
 		FileWriter writeCommitNumFile = new FileWriter(
-				"fuser/numberofcommits/numberofcommitsoutput.xml");
+				"src/numberofcommits/numberofcommitsoutput.xml");
 
 		BufferedWriter write1 = new BufferedWriter(writeCqFile);
 		BufferedWriter write2 = new BufferedWriter(writeCommitNumFile);
