@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Fuser {
+public class fuser {
 	static ArrayList<String> violationList = new ArrayList<String>();
 	static ArrayList<String> numberOfCommitList = new ArrayList<String>();
 
