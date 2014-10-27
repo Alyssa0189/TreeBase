@@ -8,7 +8,7 @@
     <packagecount>3</packagecount>
     <classcount>40</classcount>
     <methodscount>293</methodscount>
-    <violationscount>3000</violationscount>
+    <violationscount>5788</violationscount>
     <linecount>3753</linecount>
     <ncsscount>1964</ncsscount>
     <functionpointscount>37.056603773584904</functionpointscount>
@@ -94,3 +94,4 @@
     </worstclasses>
   </overview>
 </jcsc>
+
