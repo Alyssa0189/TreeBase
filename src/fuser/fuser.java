@@ -1,5 +1,7 @@
 package fuser;
 
+import gitHubParser.Parser;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,6 +13,8 @@ public class fuser {
 	static ArrayList<String> numberOfCommitList = new ArrayList<String>();
 
 	public static void main(String[] args) throws Exception {
+		Parser p = new Parser();
+		
 		File codeQualityFolder = new File("src/codequality");
 		File numberOfCommitsFolder = new File("src/numberofcommits");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
