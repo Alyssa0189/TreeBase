@@ -11,7 +11,7 @@
 		jcschome="${env.JCSC_HOME}">
 	<fileset dir="./codebase" 
 		includes="**/*.java"/>
-  </jcsc>
+	</jcsc>
 </target>
 
 </project>
