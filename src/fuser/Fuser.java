@@ -8,17 +8,20 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class fuser {
+public class Fuser {
 	static ArrayList<String> violationList = new ArrayList<String>();
-	static ArrayList<String> numberOfCommitList = new ArrayList<String>();
+	static ArrayList<String> authorNameList = new ArrayList<String>();
+	static ArrayList<Integer> commitNumberList = new ArrayList<Integer>();
 
 	public static void main(String[] args) throws Exception {
 		Parser p = new Parser();
-		
+
 		File codeQualityFolder = new File("src/codequality");
 		File numberOfCommitsFolder = new File("src/numberofcommits");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
 		File[] listOfCommitFiles = numberOfCommitsFolder.listFiles();
+		
+		//reads all code quality input files and creates violation number list
 		for (File file : listOfCodeQualityFiles) {
 			Scanner read = new Scanner(file);
 			while (read.hasNextLine()) {
@@ -36,28 +39,39 @@ public class fuser {
 			}
 
 		}
-
+		
+		//reads number of commit files, make list of number of commits
 		for (File file : listOfCommitFiles) {
 			Scanner read = new Scanner(file);
 			while (read.hasNextLine()) {
 				String line = read.nextLine();
-				if (line.contains("number of commits")) {
+				if (line.contains("author")) {
 					int left = line.indexOf(":");
 					int right = line.indexOf(",");
 
-					String commitNumber = line.substring(left + 3, right - 1);
-					numberOfCommitList.add(commitNumber); // add for each file
+					String authorName = line.substring(left + 2, right - 1);
+					System.out.println(authorName);
+					authorNameList.add(authorName); // add for each file
+					
+					}
 				}
 			}
-
+		for (int i = 0; i<authorNameList.size(); i++){
+			commitNumberList.add(i+1);
+			System.out.println(commitNumberList);
+			
 		}
+		
 		ArrayList<Integer> writeToFile = writeToFile(violationList,
-				numberOfCommitList);
-	}
-
+				commitNumberList);
+		}
+		
+		
+	
+	//writes code quality number and number of commits into seperate output files
 	public static ArrayList<Integer> writeToFile(
-			ArrayList<String> listOfViolations, ArrayList<String> commitList2)
-			throws Exception {
+			ArrayList<String> listOfViolations,
+			ArrayList<Integer> commitNumberList2) throws Exception {
 		FileWriter writeCqFile = new FileWriter(
 				"src/codequality/codequalityoutput.txt");
 		FileWriter writeCommitNumFile = new FileWriter(
@@ -72,8 +86,9 @@ public class fuser {
 			write1.flush();
 
 		}
-		for (String a : commitList2) {
-			write2.write(a, 0, commitList2.size());
+		for (Integer a : commitNumberList2) {
+			//System.out.println(commitNumberList);
+			write2.write(a);
 			write2.newLine();
 			write2.flush();
 		}
