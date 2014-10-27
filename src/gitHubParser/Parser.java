@@ -75,7 +75,7 @@ public static JSONObject jsonBuilder(List<RepositoryCommit> list){
 	
 		mainJSON = new JSONObject();
 	
-	for(int i = 0; i < 5; i++){
+	for(int i = 0; i < 150; i++){
 		JSONObject commitsingle = new JSONObject();
 		
 		//returning null pointer right now not sure why
@@ -91,6 +91,7 @@ public static JSONObject jsonBuilder(List<RepositoryCommit> list){
 		mainJSON.put("commitNumber" + Integer.toString(i), commitarray);
 	}
 	
+	//If you wanted an XML file
 	String xml = XML.toString(mainJSON);
 
     
