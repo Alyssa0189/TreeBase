@@ -15,7 +15,8 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 
 
@@ -55,19 +56,19 @@ public static void getRepo(GitHubClient client) throws IOException{
 	CommitService serv1 = new CommitService();
 	
 	Repository repo = service.getRepository("square", "dagger");
-	System.out.println(repo.getName());
-	System.out.println(repo.getHtmlUrl());
-	System.out.println(client.getUser());
+	System.out.println("Repo Name: " + repo.getName());
+	System.out.println("Repo Link: " + repo.getHtmlUrl());
+	System.out.println("Logged in User: " + client.getUser());
 	
 	
 	//List of Commits on a Repository, in reverse order that is commit at list.get(0) is the most recent
 	commitList = serv1.getCommits(repo);
 	
-	//Proof that the commits are held in the list, by displaying the most recent authors
-//	for (int i = 0; i < 6; i++){
-//		System.out.println(x.get(i).getCommit().getAuthor().getName());
-//		System.out.println(x.get(i).getCommit().getCommitter().getDate());
-//	}
+//Proof that the commits are held in the list, by displaying the most recent authors
+	for (int i = 0; i < 6; i++){
+		System.out.println("Author: " + commitList.get(i).getCommit().getAuthor().getName());
+		System.out.println("Date of Commit: " + commitList.get(i).getCommit().getCommitter().getDate());
+	}
 	
 }
 
@@ -75,7 +76,8 @@ public static JSONObject jsonBuilder(List<RepositoryCommit> list){
 	
 		mainJSON = new JSONObject();
 	
-	for(int i = 0; i < 150; i++){
+	//Set to only grab the 25 most recent commits for testing purposes
+	for(int i = 0; i < 25; i++){
 		JSONObject commitsingle = new JSONObject();
 		
 		//returning null pointer right now not sure why
@@ -93,10 +95,10 @@ public static JSONObject jsonBuilder(List<RepositoryCommit> list){
 	
 	//If you wanted an XML file
 	String xml = XML.toString(mainJSON);
-
-    
+	
 	//Example of the JSON being produced
-	System.out.println(mainJSON.toString());
+	System.out.println(mainJSON.toString(1));
+	
 	return mainJSON;
 }
 
@@ -104,9 +106,9 @@ public void writeToFile() throws IOException{
 	
     FileWriter file = new FileWriter("src/gitHubParser/jsonastxt.txt");
     try {
-        file.write(mainJSON.toString());
+        file.write(mainJSON.toString(1));
         System.out.println("Successfully turned JSON into text file.");
-        System.out.println("\nJSON Object: " + mainJSON);
+        System.out.println("\nJSON Object: " + mainJSON.toString(1));
 
     } catch (IOException e) {
         e.printStackTrace();
@@ -116,6 +118,7 @@ public void writeToFile() throws IOException{
         file.close();
     }
     
-}
+	}
 
 }
+
