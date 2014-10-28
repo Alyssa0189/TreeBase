@@ -57,22 +57,22 @@ Testing procedures:
 	
 **fuser:**  
 * (Visual test, Manual)
-	*Input: overview1.xml, overview2.xml, overview3.xml (files in codeQualityFolder)
-	*Output: violation number from each file in a list format. For example: [2008, 3000, 5788]
-	*Test: This will test if correct data is obtained from input file. 
+	* Input: overview1.xml, overview2.xml, overview3.xml (files in codeQualityFolder)
+	* Output: violation number from each file in a list format. For example: [2008, 3000, 5788]
+	* Test: This will test if correct data is obtained from input file. 
 	Compare against the expected value (in the input file) to output printed in the console by outputSystem.out.println(violationList) command.
 
 * (Visual test, Manual)
-	*Input: mockCommitDataForFuser1.txt, mockCommitDataForFuser2.txt (files in numberofcommits folder)
-	*Output: list of total number of commits from all files. For example: [1, 2, 3, 4, 5, 6]
-	*Test: This will test if correct data is obtained from input file. 
+	* Input: mockCommitDataForFuser1.txt, mockCommitDataForFuser2.txt (files in numberofcommits folder)
+	* Output: list of total number of commits from all files. For example: [1, 2, 3, 4, 5, 6]
+	* Test: This will test if correct data is obtained from input file. 
 	Compare number of commits in mock input file to the output printed in console by System.out.println(commitNumberList) command.
 	Note: the code does not yet take consecutive commits by the same author into consideration. This will be added later. 
  
 * (Visual test, Manual)
-	*Input: Array list of violations and Array list of number of commits
-	*Output: “codequalityoutput.txt" and “numberofcommitsoutput.txt" files in “codequality” and “numberofcommits” folder respectively
-	*Test: This will test writeToFile method. 
+	* Input: Array list of violations and Array list of number of commits
+	* Output: 'codequalityoutput.txt' and 'numberofcommitsoutput.txt' files in 'codequality' and 'numberofcommits' folder respectively
+	* Test: This will test writeToFile method. 
 	Compare number of commits and number of violations in the mock input files (overview1.xml, overview2.xml, overview3.xml, mockCommitDataForFuser1.txt and mockCommitDataForFuser2.txt) to the result obtained in the two output files. 
 			 
 		
