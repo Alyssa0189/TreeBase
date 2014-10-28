@@ -24,30 +24,43 @@ public class Parser {
 	
 static List<RepositoryCommit> commitList;
 private static JSONObject mainJSON;
+private static JSONArray finalarray;
 
 public Parser(){
-	
+
 	Executor executor = Executors.newSingleThreadExecutor();
 	executor.execute(new Runnable() { public void run() {
 		GitHubClient client = new GitHubClient();
-		client.setCredentials("410project", "project410");
+		
+		//Still trying to figure out authentication
+		client.setOAuth2Token("aae877bfdb473ffedc5010372138d29c82efba75");
+		//client.setCredentials("410project", "project410");
+
+		//Just a bit of code that stops rate limit error from being reached, terminates the single thread. 
+		if (client.getRemainingRequests() == -1){
+			System.out.println("Rate Limit Reached");
+			Thread.currentThread().stop();
+		}
+
 		try {
 			getRepo(client);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-			jsonBuilder(commitList);
-			
-			try {
-				writeToFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		}});
 
-	
+		jsonBuilder(commitList);
+
+		try {
+			writeToFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+
+	}});
+
+
 }
 
 
@@ -72,43 +85,54 @@ public static void getRepo(GitHubClient client) throws IOException{
 	
 }
 
-public static JSONObject jsonBuilder(List<RepositoryCommit> list){
+public static JSONArray jsonBuilder(List<RepositoryCommit> list){
 	
 		mainJSON = new JSONObject();
+		JSONArray finalarray = new JSONArray();
 	
 	//Set to only grab the 25 most recent commits for testing purposes
-	for(int i = 0; i < 25; i++){
+	for(int i = 0; i < 5; i++){
 		JSONObject commitsingle = new JSONObject();
 		
-		//returning null pointer right now not sure why
-		//commitsingle.put("totalChanges", list.get(i).getStats().getTotal());
-		
+		commitsingle.put("commitNumber", Integer.toString(i));
 		commitsingle.put("author", list.get(i).getCommit().getAuthor().getName());
 		commitsingle.put("commitTime", list.get(i).getCommit().getCommitter().getDate());
 
 		JSONArray commitarray = new JSONArray();
 		commitarray.put(commitsingle);
-	
-	
+		
+		
+		//sorted JSONarray version
+		finalarray.put(commitarray);
+		
+		//Unsorted JSONobject version
 		mainJSON.put("commitNumber" + Integer.toString(i), commitarray);
+		
 	}
+	
 	
 	//If you wanted an XML file
 	String xml = XML.toString(mainJSON);
 	
 	//Example of the JSON being produced
-	System.out.println(mainJSON.toString(1));
+	//System.out.println(mainJSON.toString(1));
+	//Unsortable JSONobject version ^
 	
-	return mainJSON;
+	//Sorted JSONArray version
+	System.out.println(finalarray.toString(1));
+	
+	return finalarray;
 }
 
 public void writeToFile() throws IOException{
 	
     FileWriter file = new FileWriter("src/gitHubParser/jsonastxt.txt");
     try {
+    	
+    	//TODO: currently writing the unsorted JSON to file, need to fix this
         file.write(mainJSON.toString(1));
-        System.out.println("Successfully turned JSON into text file.");
-        System.out.println("\nJSON Object: " + mainJSON.toString(1));
+        System.out.println("Successfully turned JSON array into text file.");
+        System.out.println("\nJSON Array: " + finalarray.toString(1));
 
     } catch (IOException e) {
         e.printStackTrace();

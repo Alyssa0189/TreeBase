@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="lib/json-20140107.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.egit.github.core-2.1.5-javadoc (1).jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.egit.github.core-2.1.5-sources.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.egit.github.core-2.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.egit.github.core-2.1.5.jar" sourcepath="lib/org.eclipse.egit.github.core-2.1.5-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
