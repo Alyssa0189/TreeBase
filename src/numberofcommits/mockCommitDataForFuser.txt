@@ -1,3 +1,0 @@
-{"commitNumber1":[{"author":"Christian Edward Gruber","commitTime":"Tue Nov 12 21:49:48 PST 2013"}],
-"commitNumber2":[{"author":"Gregory Kick","commitTime":"Tue Nov 12 21:06:11 PST 2013"}]
-"commitNumber3":[{"author":"Who Someone","commitTime":"Tue Nov 12 22:06:11 PST 2013"}]}}

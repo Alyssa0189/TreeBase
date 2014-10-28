@@ -12,6 +12,7 @@ public class Fuser {
 	static ArrayList<String> violationList = new ArrayList<String>();
 	static ArrayList<String> authorNameList = new ArrayList<String>();
 	static ArrayList<Integer> commitNumberList = new ArrayList<Integer>();
+	static ArrayList<String> commits = new ArrayList<String>();
 
 	public static void main(String[] args) throws Exception {
 		Parser p = new Parser();
@@ -20,8 +21,8 @@ public class Fuser {
 		File numberOfCommitsFolder = new File("src/numberofcommits");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
 		File[] listOfCommitFiles = numberOfCommitsFolder.listFiles();
-		
-		//reads all code quality input files and creates violation number list
+
+		// reads all code quality input files and creates violation number list
 		for (File file : listOfCodeQualityFiles) {
 			Scanner read = new Scanner(file);
 			while (read.hasNextLine()) {
@@ -39,8 +40,11 @@ public class Fuser {
 			}
 
 		}
-		
-		//reads number of commit files, make list of number of commits
+		System.out.println(violationList); // test for comparing correct value
+											// for violation is read from the
+											// file
+
+		// reads number of commit files, makes list of number of commits
 		for (File file : listOfCommitFiles) {
 			Scanner read = new Scanner(file);
 			while (read.hasNextLine()) {
@@ -50,28 +54,31 @@ public class Fuser {
 					int right = line.indexOf(",");
 
 					String authorName = line.substring(left + 2, right - 1);
-					System.out.println(authorName);
-					authorNameList.add(authorName); // add for each file
-					
-					}
+					authorNameList.add(authorName);
+					System.out.println(authorName); // tests if the Author's
+													// name is substringged
+													// correctly from the file
 				}
 			}
-		for (int i = 0; i<authorNameList.size(); i++){
-			commitNumberList.add(i+1);
-			System.out.println(commitNumberList);
+
+		}
+
+		for (int i = 0; i < authorNameList.size(); i++) {
+			commitNumberList.add(i + 1);
+		}
+		System.out.println(commitNumberList); // tests if correct input from
+												// file is read and added to
+												// commit numberlist
+
+		convertToString (commitNumberList);
+		writeToFile(violationList, commits);
 			
-		}
-		
-		ArrayList<Integer> writeToFile = writeToFile(violationList,
-				commitNumberList);
-		}
-		
-		
-	
-	//writes code quality number and number of commits into seperate output files
-	public static ArrayList<Integer> writeToFile(
-			ArrayList<String> listOfViolations,
-			ArrayList<Integer> commitNumberList2) throws Exception {
+	}
+
+	// writes code quality number and number of commits into seperate output
+	// files
+	public static ArrayList<Integer> writeToFile(ArrayList<String> listOfViolations, 
+			ArrayList<String> commitNumberList2) throws Exception {
 		FileWriter writeCqFile = new FileWriter(
 				"src/codequality/codequalityoutput.txt");
 		FileWriter writeCommitNumFile = new FileWriter(
@@ -86,13 +93,23 @@ public class Fuser {
 			write1.flush();
 
 		}
-		for (Integer a : commitNumberList2) {
-			//System.out.println(commitNumberList);
+		
+		for (String a : commitNumberList2) {
 			write2.write(a);
 			write2.newLine();
 			write2.flush();
 		}
 
 		return null;
+	}
+	
+	//Converts Integer List to String List
+	public static ArrayList<String> convertToString(ArrayList<Integer> someIntList) {
+		for (Integer i : someIntList) { 
+				commits.add(String.valueOf(i)); 
+				}
+			return commits;
+			
+			
 	}
 }
