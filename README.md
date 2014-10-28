@@ -9,7 +9,7 @@
 
 ## Testing procedures:
 
-**launch script:**  
+**launch script:** 
 * unit test: cloning the code base
 	* Input: a code base's git repository URL
 	* Output: a copy of the repository in the 'codebase' folder
@@ -43,7 +43,7 @@
 	* Output: a set of tree png images in the 'src/visualizer/treeFrames' directory
 	* Test: confirm that the trees in the images have the correct height and 'liveliness' given the mock inputs
 	
-**git commit tool:**  
+**git commit tool:** 
 * (visual tests, manual)
 	* Input: a GitHub-hosted repository
 	* Output: a text file containing JSON-formatted information for all commits in the 'src/gitHubParser/' directory
@@ -53,7 +53,7 @@
 		* compare values for author and time in the file to those in the repository (e.g., look at the most recent commits on the repository - on GitHub itself for the hardcoded 'square/dagger' repo - and confirm that they have the same authors as those in the file)
 		* confirm that commits in the file starting at commitNumber0 refer to the latest commit in the repository
 	
-**fuser:**  
+**fuser:** 
 * blah
 	* Input:
 	* Output:
@@ -63,8 +63,8 @@
 	* Output:
 	* Test:
 	
-**visualizer:**  
-*  (Integration test, manual):
+**visualizer:**
+*  (manual test):
 	Input: 	Dummy commit and code quality data files.
 	Output: A sequence of images.
 	Test A: 	Edit TreeVisualizer.py so that commitDataFileName = "/visualizer/tests/mockCommitData0.txt"
