@@ -1,8 +1,10 @@
 package gitHubParser;
 
 
+import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -15,6 +17,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -25,6 +28,10 @@ public class Parser {
 static List<RepositoryCommit> commitList;
 private static JSONObject mainJSON;
 private static JSONArray finalarray;
+private static JSONObject finalJSON;
+private static String repoCode;
+private static String owner;
+private static String name;
 
 public Parser(){
 
@@ -34,13 +41,9 @@ public Parser(){
 		
 		//Still trying to figure out authentication
 		client.setOAuth2Token("aae877bfdb473ffedc5010372138d29c82efba75");
-		//client.setCredentials("410project", "project410");
-
-		//Just a bit of code that stops rate limit error from being reached, terminates the single thread. 
-	//	if (client.getRemainingRequests() == -1){
-	//		System.out.println("Rate Limit Reached");
-	//		Thread.currentThread().stop();
-	//	}
+		client.setCredentials("410project", "project410");
+		
+		userRepoInput();
 
 		try {
 			getRepo(client);
@@ -55,20 +58,53 @@ public Parser(){
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-
+		
 	}});
+	
+}
 
-
+private static void userRepoInput(){
+	boolean x = false;
+	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	
+    System.out.print("Please select a Repository Code(1 for dagger, 2 for 310[Won't work right now]): ");
+    
+    repoCode = null;
+    try {
+        repoCode = reader.readLine();
+    } catch (IOException e) {
+        e.printStackTrace();
+    } 
+  
+    if(repoCode != null){
+    	if(repoCode.equals("1") || repoCode.equals("dagger")){
+    		owner = "square";
+    		name = "dagger";
+    		x = true;
+    	}
+    	
+    	// This won't work because this repository is private to me. 
+    	if(repoCode.equals("2") || repoCode.equals("310")){
+    		owner = "ubc-cs310";
+    		name = "creativeteamname";
+    		x = false;
+    	}
+    }
+    
+    if(x == false){
+		System.out.println("Inappropriate repository code.");
+		userRepoInput();
+	}
 }
 
 
-public static void getRepo(GitHubClient client) throws IOException{
+private static void getRepo(GitHubClient client) throws IOException{
 	RepositoryService service = new RepositoryService();
 	CommitService serv1 = new CommitService();
 	
-	Repository repo = service.getRepository("square", "dagger");
+    System.out.println("You Selected the " + name + " repository.");
+    
+	Repository repo = service.getRepository(owner, name);
 	System.out.println("Repo Name: " + repo.getName());
 	System.out.println("Repo Link: " + repo.getHtmlUrl());
 	System.out.println("Logged in User: " + client.getUser());
@@ -78,20 +114,20 @@ public static void getRepo(GitHubClient client) throws IOException{
 	commitList = serv1.getCommits(repo);
 	
 //Proof that the commits are held in the list, by displaying the most recent authors
-	for (int i = 0; i < 6; i++){
+	for (int i = 0; i < 10; i++){
 		System.out.println("Author: " + commitList.get(i).getCommit().getAuthor().getName());
 		System.out.println("Date of Commit: " + commitList.get(i).getCommit().getCommitter().getDate());
 	}
 	
 }
 
-public static JSONArray jsonBuilder(List<RepositoryCommit> list){
-	
+private static JSONObject jsonBuilder(List<RepositoryCommit> list){
 		mainJSON = new JSONObject();
-		JSONArray finalarray = new JSONArray();
+		finalJSON = new JSONObject();
+		finalarray = new JSONArray();
 	
-	//Set to only grab the 25 most recent commits for testing purposes
-	for(int i = 0; i < 5; i++){
+	//Set to only grab the 10 most recent commits for testing purposes
+	for(int i = 0; i < 10; i++){
 		JSONObject commitsingle = new JSONObject();
 		
 		commitsingle.put("commitNumber", Integer.toString(i));
@@ -118,21 +154,22 @@ public static JSONArray jsonBuilder(List<RepositoryCommit> list){
 	//System.out.println(mainJSON.toString(1));
 	//Unsortable JSONobject version ^
 	
-	//Sorted JSONArray version
-	System.out.println(finalarray.toString(1));
 	
-	return finalarray;
+	//Sorted JSONArray(nested within one JSONobject) version
+	finalJSON.put("JSONarray", finalarray);
+	System.out.println(finalJSON.toString(1));
+	
+	
+	return finalJSON;
 }
 
-public void writeToFile() throws IOException{
+private void writeToFile() throws IOException{
 	
     FileWriter file = new FileWriter("src/gitHubParser/jsonastxt.txt");
     try {
-    	
-    	//TODO: currently writing the unsorted JSON to file, need to fix this
-        file.write(mainJSON.toString(1));
+        file.write(finalJSON.toString(1));
         System.out.println("Successfully turned JSON array into text file.");
-        System.out.println("\nJSON Object: " + mainJSON.toString(1));
+        System.out.println("\nJSON Object: " + finalJSON.toString(1));
 
     } catch (IOException e) {
         e.printStackTrace();
