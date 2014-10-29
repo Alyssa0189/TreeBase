@@ -33,6 +33,11 @@ private static String repoCode;
 private static String owner;
 private static String name;
 
+
+public static void main(String[] args) {
+	Parser p = new Parser();
+}
+
 public Parser(){
 
 	Executor executor = Executors.newSingleThreadExecutor();
@@ -143,7 +148,6 @@ private static JSONObject jsonBuilder(List<RepositoryCommit> list){
 		
 		//Unsorted JSONobject version
 		mainJSON.put("commitNumber" + Integer.toString(i), commitarray);
-		
 	}
 	
 	
@@ -178,8 +182,7 @@ private void writeToFile() throws IOException{
         file.flush();
         file.close();
     }
-    
-	}
+ }
 
 }
 
