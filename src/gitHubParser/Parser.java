@@ -37,10 +37,10 @@ public Parser(){
 		//client.setCredentials("410project", "project410");
 
 		//Just a bit of code that stops rate limit error from being reached, terminates the single thread. 
-		if (client.getRemainingRequests() == -1){
-			System.out.println("Rate Limit Reached");
-			Thread.currentThread().stop();
-		}
+	//	if (client.getRemainingRequests() == -1){
+	//		System.out.println("Rate Limit Reached");
+	//		Thread.currentThread().stop();
+	//	}
 
 		try {
 			getRepo(client);
@@ -132,7 +132,7 @@ public void writeToFile() throws IOException{
     	//TODO: currently writing the unsorted JSON to file, need to fix this
         file.write(mainJSON.toString(1));
         System.out.println("Successfully turned JSON array into text file.");
-        System.out.println("\nJSON Array: " + finalarray.toString(1));
+        System.out.println("\nJSON Object: " + mainJSON.toString(1));
 
     } catch (IOException e) {
         e.printStackTrace();
