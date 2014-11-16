@@ -13,6 +13,7 @@ public class Fuser {
 	static ArrayList<String> authorNameList = new ArrayList<String>();
 	static ArrayList<Integer> commitNumberList = new ArrayList<Integer>();
 	static ArrayList<String> commits = new ArrayList<String>();
+	static String previous;
 
 	public static void main(String[] args) throws Exception {
 		Parser p = new Parser();
@@ -21,7 +22,7 @@ public class Fuser {
 		File numberOfCommitsFolder = new File("src/numberofcommits");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
 		File[] listOfCommitFiles = numberOfCommitsFolder.listFiles();
-
+		
 		// reads all code quality input files and creates violation number list
 		for (File file : listOfCodeQualityFiles) {
 			Scanner read = new Scanner(file);
@@ -40,9 +41,10 @@ public class Fuser {
 			}
 
 		}
-		System.out.println(violationList); // test for comparing correct value
-											// for violation is read from the
-											// file
+		// System.out.println(violationList); // test for comparing correct
+		// value
+		// for violation is read from the
+		// file
 
 		// reads number of commit files, makes list of number of commits
 		for (File file : listOfCommitFiles) {
@@ -55,29 +57,67 @@ public class Fuser {
 
 					String authorName = line.substring(left + 2, right - 1);
 					authorNameList.add(authorName);
-					System.out.println(authorName); // tests if the Author's
-													// name is substringged
-													// correctly from the file
+					// System.out.println(authorName); // tests if the Author's
+					// name is substringged
+					// correctly from the file
 				}
 			}
 
 		}
 
-		for (int i = 0; i < authorNameList.size(); i++) {
+
+		/*
+		 * for (int j=(i+1); j<authorNameList.size();j++ ){
+			//if(authorNameList.get(i-1) != null) && (authorNameList.get(i-1)) != (authorNameList.get(i)) {
+			//String current=authorNameList.get(i);
+			//String next=authorNameList.get(i+1);
+			//int a=1;
+			if (i==j){
+			commitNumberList.add(i + 0);
+			}
+			else
 			commitNumberList.add(i + 1);
+			}
+		 */
+
+		//ArrayList nextAuthorList = (ArrayList) authorNameList.clone();
+		//int x=1;
+		//commitNumberList.add(x);
+
+		for (int i = 0; i < authorNameList.size(); i++) {
+			//int a = 1;
+			String current = authorNameList.get(i);
+			System.out.println(current);
+			String previous = authorNameList.get(i - 1);
+			System.out.println(previous);
+			if (previous==null) {
+				commitNumberList.add(i + 2);
+			}
+			if((previous != null) && (previous.equals(current))) {
+				System.out.println(current);
+				System.out.println(previous);
+					commitNumberList.add(i + 0);
+					System.out.println("they re equal" + commitNumberList);
+				} else
+					commitNumberList.add(i + 1);
+					System.out.println("not equal" + commitNumberList);
+			
 		}
+		
+
 		System.out.println(commitNumberList); // tests if correct input from
 												// file is read and added to
 												// commit numberlist
 
-		convertToString (commitNumberList);
+		convertToString(commitNumberList);
 		writeToFile(violationList, commits);
-			
+
 	}
 
 	// writes code quality number and number of commits into seperate output
 	// files
-	public static ArrayList<Integer> writeToFile(ArrayList<String> listOfViolations, 
+	public static ArrayList<Integer> writeToFile(
+			ArrayList<String> listOfViolations,
 			ArrayList<String> commitNumberList2) throws Exception {
 		FileWriter writeCqFile = new FileWriter(
 				"src/codequality/codequalityoutput.txt");
@@ -93,7 +133,7 @@ public class Fuser {
 			write1.flush();
 
 		}
-		
+
 		for (String a : commitNumberList2) {
 			write2.write(a);
 			write2.newLine();
@@ -102,14 +142,14 @@ public class Fuser {
 
 		return null;
 	}
-	
-	//Converts Integer List to String List
-	public static ArrayList<String> convertToString(ArrayList<Integer> someIntList) {
-		for (Integer i : someIntList) { 
-				commits.add(String.valueOf(i)); 
-				}
-			return commits;
-			
-			
+
+	// Converts Integer List to String List
+	public static ArrayList<String> convertToString(
+			ArrayList<Integer> someIntList) {
+		for (Integer i : someIntList) {
+			commits.add(String.valueOf(i));
+		}
+		return commits;
+
 	}
 }
