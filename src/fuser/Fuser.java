@@ -12,7 +12,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-
 public class Fuser {
 	private static final String commitListFilePath = "src/gitHubParser/jsonastxt.txt";
 	static ArrayList<String> violationList = new ArrayList<String>();
@@ -25,42 +24,40 @@ public class Fuser {
 
 		File codeQualityFolder = new File("src/codequality");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
-		
-		// reads all code quality input files and creates violation number list
+
+		// read all code quality input files and creates violation number list
 		for (File file : listOfCodeQualityFiles) {
 			Scanner read = new Scanner(file);
 			while (read.hasNextLine()) {
 				String line = read.nextLine();
 				if (line.contains("<violationscount>")) {
-					// reference:http://codingbat.com/doc/java-string-indexof-parsing.html
+					// reference: http://codingbat.com/doc/java-string-indexof-parsing.html
 					int left = line.indexOf(">");
 					int right = line.indexOf("/");
 
-					String violationNumber = line
-							.substring(left + 1, right - 1);
+					String violationNumber = line.substring(left + 1, right - 1);
 					violationList.add(violationNumber); // add for each file
 				}
-
 			}
-
+			read.close();
 		}
-		
+
 		// parse commit file, get list of all authors
 		FileReader reader = new FileReader(commitListFilePath);
 		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);		
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 		JSONArray jsonArray = (JSONArray) jsonObject.get("JSONarray");
-		
+
 		for (int i = 0; i < jsonArray.size(); i++) {
 			JSONArray commitArray = (JSONArray) jsonArray.get(i);
 			JSONObject commitObj = (JSONObject) commitArray.get(0);
 			String authorName = commitObj.get("author").toString();
 			authorNameList.add(authorName);
 		}
-		
+
 		// reverse list of authors so first commit is at the front of the list
 		Collections.reverse(authorNameList);
-		
+
 		// get the number of commits up to each commit,
 		// discounting those made by the person who committed previously
 		int count = 1;
@@ -75,15 +72,11 @@ public class Fuser {
 			commitNumberList.add(count);
 		}
 
-		// check if correct input from file is read and added to commitNumberList
-		System.out.println(commitNumberList);
-
 		convertToString(commitNumberList);
 		writeToFile(violationList, commits);
 	}
 
-	// writes code quality number and number of commits into seperate output
-	// files
+	// write number of violations and number of commits into separate output files
 	public static ArrayList<Integer> writeToFile(
 			ArrayList<String> listOfViolations,
 			ArrayList<String> commitNumberList2) throws Exception {
@@ -99,7 +92,6 @@ public class Fuser {
 			write1.write(s, 0, listOfViolations.size() + 1);
 			write1.newLine();
 			write1.flush();
-
 		}
 
 		for (String a : commitNumberList2) {
@@ -108,16 +100,18 @@ public class Fuser {
 			write2.flush();
 		}
 
+		write1.close();
+		write2.close();
 		return null;
 	}
 
-	// Converts Integer List to String List
+	// convert Integer list to String list
 	public static ArrayList<String> convertToString(
 			ArrayList<Integer> someIntList) {
 		for (Integer i : someIntList) {
 			commits.add(String.valueOf(i));
 		}
 		return commits;
-
 	}
+
 }

@@ -22,8 +22,8 @@ javac -d bin -cp "lib/gson-2.3.jar;lib/json-20140107.jar;lib/org.eclipse.egit.gi
 java -cp "bin;lib/gson-2.3.jar;lib/json-20140107.jar;lib/org.eclipse.egit.github.core-2.1.5.jar;lib/org.eclipse.egit.github.core-2.1.5-javadoc (1).jar;lib/org.eclipse.egit.github.core-2.1.5-sources.jar" gitHubParser.Parser $OWNER $NAME
 
 # run the fuser
-javac -d bin src/fuser/fuser.java
-java -cp bin fuser.fuser
+javac -d bin -cp "lib/json-simple-1.1.1.jar" src/fuser/Fuser.java
+java -cp "bin;lib/json-simple-1.1.1.jar" fuser.Fuser
 
 # run the visualization tool
 blender treeVisualizer.blend --background --python TreeVisualizer.py

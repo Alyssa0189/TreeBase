@@ -75,15 +75,6 @@ public class Parser {
 		// List of commits on a repository, in reverse order that is commit at
 		// list.get(0) is the most recent
 		commitList = serv1.getCommits(repo);
-
-		// Proof that the commits are held in the list, by displaying the most
-		// recent authors
-		for (int i = 0; i < 10; i++) {
-			System.out.println("Author: "
-					+ commitList.get(i).getCommit().getAuthor().getName());
-			System.out.println("Date of Commit: "
-					+ commitList.get(i).getCommit().getCommitter().getDate());
-		}
 	}
 
 	private static JSONObject jsonBuilder(List<RepositoryCommit> list) {
@@ -118,7 +109,6 @@ public class Parser {
 
 		// Sorted JSONArray(nested within one JSONobject) version
 		finalJSON.put("JSONarray", finalarray);
-		System.out.println(finalJSON.toString(1));
 
 		return finalJSON;
 	}
@@ -128,7 +118,6 @@ public class Parser {
 		try {
 			file.write(finalJSON.toString(1));
 			System.out.println("Successfully turned JSON array into text file.");
-			System.out.println("\nJSON Object: " + finalJSON.toString(1));
 
 		} catch (IOException e) {
 			e.printStackTrace();
