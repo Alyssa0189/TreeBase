@@ -11,8 +11,8 @@ import sys
 import imp
 
 # Files and folders should be located in the same directory as the script.
-commitDataFileName = "/numberofcommits/mockCommitData.txt"
-qualityDataFileName = "/codequality/mockQualityData.txt"
+commitDataFileName = "/numberofcommits/numberofcommitsoutput.txt"
+qualityDataFileName = "/codequality/codequalityoutput.txt"
 imagePath = ""
 dataPath = ""
 modulePath = ""
