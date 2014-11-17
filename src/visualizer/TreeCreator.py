@@ -8,8 +8,8 @@
 
 import bpy
 
-minTreeHeight = 4.0
-maxTreeHeight = 10.0
+minTreeHeight = 1.0
+maxTreeHeight = 9.0
 contribCeiling = 4.0   # This number of contributions or higher will result in the tallest tree.
 
 greenestTreeColor = (0.0, 0.588, 0.0)
@@ -20,7 +20,7 @@ badQualityCeiling = 200.0    # Code of quality this bad or greater will result i
 # Set the command to evaluate tree creation.  The tree's 'height' should go between these commands.
 
 commandStrBeforeHeight = "bpy.ops.curve.tree_add(do_update=True, chooseSet='0', bevel=True, prune=False, \
-showLeaves=False, useArm=False, seed=0, handleType='1', levels=2, length=(1, 0.3, 0.6, 0.45), \
+showLeaves=True, useArm=False, seed=0, handleType='1', levels=2, length=(1, 0.3, 0.6, 0.45), \
 lengthV=(0, 0, 0, 0), branches=(0, 50, 30, 10), curveRes=(3, 5, 3, 1), curve=(0, -40, -40, 0), \
 curveV=(20, 50, 75, 0), curveBack=(0, 0, 0, 0), baseSplits=0, segSplits=(0, 0, 0, 0), splitAngle=(0, 0, 0, 0), splitAngleV=(0, 0, 0, 0), \
 scale="
