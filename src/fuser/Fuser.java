@@ -1,14 +1,20 @@
 package fuser;
 
-import gitHubParser.Parser;
-
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+
 public class Fuser {
+	private static final String commitListFilePath = "src/gitHubParser/jsonastxt.txt";
 	static ArrayList<String> violationList = new ArrayList<String>();
 	static ArrayList<String> authorNameList = new ArrayList<String>();
 	static ArrayList<Integer> commitNumberList = new ArrayList<Integer>();
@@ -16,12 +22,9 @@ public class Fuser {
 	static String previous;
 
 	public static void main(String[] args) throws Exception {
-		Parser p = new Parser();
 
 		File codeQualityFolder = new File("src/codequality");
-		File numberOfCommitsFolder = new File("src/numberofcommits");
 		File[] listOfCodeQualityFiles = codeQualityFolder.listFiles();
-		File[] listOfCommitFiles = numberOfCommitsFolder.listFiles();
 		
 		// reads all code quality input files and creates violation number list
 		for (File file : listOfCodeQualityFiles) {
@@ -41,77 +44,42 @@ public class Fuser {
 			}
 
 		}
-		// System.out.println(violationList); // test for comparing correct
-		// value
-		// for violation is read from the
-		// file
-
-		// reads number of commit files, makes list of number of commits
-		for (File file : listOfCommitFiles) {
-			Scanner read = new Scanner(file);
-			while (read.hasNextLine()) {
-				String line = read.nextLine();
-				if (line.contains("author")) {
-					int left = line.indexOf(":");
-					int right = line.indexOf(",");
-
-					String authorName = line.substring(left + 2, right - 1);
-					authorNameList.add(authorName);
-					// System.out.println(authorName); // tests if the Author's
-					// name is substringged
-					// correctly from the file
-				}
-			}
-
-		}
-
-
-		/*
-		 * for (int j=(i+1); j<authorNameList.size();j++ ){
-			//if(authorNameList.get(i-1) != null) && (authorNameList.get(i-1)) != (authorNameList.get(i)) {
-			//String current=authorNameList.get(i);
-			//String next=authorNameList.get(i+1);
-			//int a=1;
-			if (i==j){
-			commitNumberList.add(i + 0);
-			}
-			else
-			commitNumberList.add(i + 1);
-			}
-		 */
-
-		//ArrayList nextAuthorList = (ArrayList) authorNameList.clone();
-		//int x=1;
-		//commitNumberList.add(x);
-
-		for (int i = 0; i < authorNameList.size(); i++) {
-			//int a = 1;
-			String current = authorNameList.get(i);
-			System.out.println(current);
-			String previous = authorNameList.get(i - 1);
-			System.out.println(previous);
-			if (previous==null) {
-				commitNumberList.add(i + 2);
-			}
-			if((previous != null) && (previous.equals(current))) {
-				System.out.println(current);
-				System.out.println(previous);
-					commitNumberList.add(i + 0);
-					System.out.println("they re equal" + commitNumberList);
-				} else
-					commitNumberList.add(i + 1);
-					System.out.println("not equal" + commitNumberList);
-			
+		
+		// parse commit file, get list of all authors
+		FileReader reader = new FileReader(commitListFilePath);
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);		
+		JSONArray jsonArray = (JSONArray) jsonObject.get("JSONarray");
+		
+		for (int i = 0; i < jsonArray.size(); i++) {
+			JSONArray commitArray = (JSONArray) jsonArray.get(i);
+			JSONObject commitObj = (JSONObject) commitArray.get(0);
+			String authorName = commitObj.get("author").toString();
+			authorNameList.add(authorName);
 		}
 		
+		// reverse list of authors so first commit is at the front of the list
+		Collections.reverse(authorNameList);
+		
+		// get the number of commits up to each commit,
+		// discounting those made by the person who committed previously
+		int count = 1;
+		commitNumberList.add(count);
 
-		System.out.println(commitNumberList); // tests if correct input from
-												// file is read and added to
-												// commit numberlist
+		for (int i = 1; i < authorNameList.size(); i++) {
+			String currentName = authorNameList.get(i);
+			String previousName = authorNameList.get(i - 1);
+			if (!currentName.equals(previousName)) {
+				count++;
+			}
+			commitNumberList.add(count);
+		}
+
+		// check if correct input from file is read and added to commitNumberList
+		System.out.println(commitNumberList);
 
 		convertToString(commitNumberList);
 		writeToFile(violationList, commits);
-
 	}
 
 	// writes code quality number and number of commits into seperate output

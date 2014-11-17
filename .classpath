@@ -8,4 +8,5 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.egit.github.core-2.1.5-sources.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.egit.github.core-2.1.5.jar" sourcepath="lib/org.eclipse.egit.github.core-2.1.5-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
 </classpath>
