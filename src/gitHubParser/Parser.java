@@ -114,7 +114,7 @@ public class Parser {
 	}
 
 	private void writeToFile() throws IOException {
-		FileWriter file = new FileWriter("src/gitHubParser/jsonastxt.txt");
+		FileWriter file = new FileWriter("src/gitHubParser/output/jsonastxt.txt");
 		try {
 			file.write(finalJSON.toString(1));
 			System.out.println("Successfully turned JSON array into text file.");
