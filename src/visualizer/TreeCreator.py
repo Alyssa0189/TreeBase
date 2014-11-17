@@ -37,12 +37,12 @@ frameRate=1, windSpeed=2, windGust=0, armAnim=False, startCurv=0)"
 # Param quality: The code quality info, where a lower number creates a more lively tree.
 # 
 def createTree(contribs, quality):
-    	treeHeight = ((maxTreeHeight - minTreeHeight) / contribCeiling) 
-   	treeHeight *= float(contribs)
-    	treeHeight += minTreeHeight
+	treeHeight = ((maxTreeHeight - minTreeHeight) / contribCeiling) 
+	treeHeight *= float(contribs)
+	treeHeight += minTreeHeight
 
-    	treeColor = __getColor__(quality)
-    	__makeTree__(treeHeight, treeColor)
+	treeColor = __getColor__(quality)
+	__makeTree__(treeHeight, treeColor)
     
 
 # Make a tree in the current scene with a given height and color.
