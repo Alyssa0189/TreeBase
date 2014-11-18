@@ -26,4 +26,8 @@ javac -d bin -cp "lib/json-simple-1.1.1.jar" src/fuser/Fuser.java
 java -cp "bin;lib/json-simple-1.1.1.jar" fuser.Fuser
 
 # run the visualization tool
+cd src/visualizer
 blender treeVisualizer.blend --background --python TreeVisualizer.py
+
+cd treeFrames
+ffmpeg -framerate 5 -start_number 0 -i tree%d.png -c:v libx264 -r 30 -pix_fmt yuv420p TreeVideo.mp4

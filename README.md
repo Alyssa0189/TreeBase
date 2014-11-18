@@ -3,11 +3,12 @@
 Our project requires the following dependencies:  
   
 * Unix shell (to run the launch script)
-* Java
-* Python
-* Ant
+* Java 7
+* Python 3.4
+* Ant 1.9.4
 * Java Coding Standard Checker (JCSC) - http://jcsc.sourceforge.net/
-* Blender - http://www.blender.org/
+* Blender 2.71 - http://www.blender.org/
+* FFmpeg - https://www.ffmpeg.org/
   
 From the project directory, you can run our tool on any repository using the following command: `./launch.sh <repository owner> <repository name>`  
   
