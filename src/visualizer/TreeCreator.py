@@ -12,8 +12,8 @@ minTreeHeight = 1.0
 maxTreeHeight = 12.0
 contribCeiling = 350.0   # This number of contributions or higher will result in the tallest tree.
 
-greenestTreeColor = (0.0, 0.85, 0.0)
-deadestTreeColor = (0.411765, 0.188235, 0.015686)
+greenestTreeColor = (0.1529412, 0.6588235, 0.0)
+deadestTreeColor = (0.5451, 0.270588, 0.0)
 badQualityCeiling = 6000.0    # Code of quality this bad or greater will result in the deadest tree.
 
 # Leaf sizes which change with the tree height (since they scale seperately)
