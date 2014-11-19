@@ -2,34 +2,45 @@
 # based on commit number and code quality parameters.
 #
 # Author: Alyssa Lerner
-# Date: 10/26/14
-# Version 1.0
+# Version 1.1
 #
 
 import bpy
+import os
 
 minTreeHeight = 1.0
-maxTreeHeight = 9.0
-contribCeiling = 4.0   # This number of contributions or higher will result in the tallest tree.
+maxTreeHeight = 12.0
+contribCeiling = 350.0   # This number of contributions or higher will result in the tallest tree.
 
 greenestTreeColor = (0.0, 0.588, 0.0)
 deadestTreeColor = (0.41176, 0.22353, 0.02353)
-badQualityCeiling = 200.0    # Code of quality this bad or greater will result in the deadest tree.
+badQualityCeiling = 6000.0    # Code of quality this bad or greater will result in the deadest tree.
+
+# Leaf sizes which change with the tree height (since they scale seperately)
+minLeafSize = 0.07
+maxLeafSize = 0.20
+
+# Vertical attraction of tree dependent on quality
+minVertAttraction = -1.0
+maxVertAttraction = 0.5
 
 
-# Set the command to evaluate tree creation.  The tree's 'height' should go between these commands.
+# Set the command which will create a single tree.
 
-commandStrBeforeHeight = "bpy.ops.curve.tree_add(do_update=True, chooseSet='4', bevel=True, prune=False, \
-showLeaves=True, useArm=False, seed=0, handleType='1', levels=3, length=(1, 0.3, 0.6, 0.45), \
-lengthV=(0, 0, 0, 0), branches=(1, 52, 30, 10), curveRes=(3, 5, 3, 1), curve=(0, -40, -40, 0), \
-curveV=(20, 50, 75, 0), curveBack=(0, 0, 0, 0), baseSplits=0, segSplits=(0.01, 0.01, 0.01, 0.01), splitAngle=(0, 0, 0, 0), splitAngleV=(0, 0, 0, 0), \
-scale="
+commandBeforeHeight = "bpy.ops.curve.tree_add(do_update=True, chooseSet='3', bevel=True, prune=False, showLeaves=True,\
+ useArm=False, seed=0, handleType='1', levels=3, length=(1, 0.32, 0.6, 0.45), lengthV=(0, 0, 0, 0), branches=(0, 70, 20, 9),\
+ curveRes=(3, 5, 3, 1), curve=(0, -40, -40, 0), curveV=(20, 50, 75, 0), curveBack=(0, 0, 0, 0), baseSplits=0, segSplits=(0,\
+ 0, 0.03, 0), splitAngle=(0, -0.09, 0, 0), splitAngleV=(0, -0.03, 0, 0), scale="
 
-commandStrAfterHeight = ", scaleV=3, attractUp=0.5, shape='7', baseSize=0.26, ratio=0.015, taper=(1, 1, 1, 1), ratioPower=1.2, downAngle=(90, 60, 45, 45), \
-downAngleV=(0, -50, 10, 10), rotate=(140, 140, 140, 77), rotateV=(0, 0, 0, 0), scale0=1, scaleV0=0.2, pruneWidth=0.4, pruneWidthPeak=0.6, \
-prunePowerHigh=0.5, prunePowerLow=0.001, pruneRatio=1, leaves=12, leafScale=0.1, leafScaleX=1, leafShape='hex', leafDist='4', bend=0.02, bevelRes=2, resU=4, \
-frameRate=1, windSpeed=2, windGust=0, armAnim=False, startCurv=0)"
+commandBeforeVAttraction = ", scaleV=3, attractUp="
 
+commandBeforeLeafSize = ", shape='2', baseSize=0.28, ratio=0.02, taper=(1, 1, 1, 1),\
+ ratioPower=1.25, downAngle=(90, 59.85, 45, 45), downAngleV=(0, -50, 10, 10), rotate=(140, 140, 140, 77), rotateV=(0.03,\
+ 0.09, 0, 0), scale0=1, scaleV0=0.2, pruneWidth=0.4, pruneWidthPeak=0.6, prunePowerHigh=0.5, prunePowerLow=0.001,\
+ pruneRatio=1, leaves=18, leafScale="
+
+commandEnding = ", leafScaleX=1, leafDist='4', bend=0, bevelRes=1, resU=4, frameRate=1, windSpeed=2, windGust=0,\
+ armAnim=False, startCurv=0)"
 
 # Create a tree in the current scene according to the given parameters.
 #
@@ -46,9 +57,9 @@ def createTree(contribs, quality):
 		treeHeight = ((maxTreeHeight - minTreeHeight) / contribCeiling) 
 		treeHeight *= float(contribs)
 		treeHeight += minTreeHeight
-
-	treeColor = __getColor__(quality)
-	__makeTree__(treeHeight, treeColor)
+	
+	treeColor = getColor(quality)
+	makeTree(treeHeight, treeColor)
     
 
 # Make a tree in the current scene with a given height and color.
@@ -56,34 +67,89 @@ def createTree(contribs, quality):
 # Param height: A float indicating the tree's height.
 # Param color: A 3-tuple indicating the tree's rgb color.
 # 
-def __makeTree__(height, color):
-    
-    # Create the tree mesh.
-    eval(commandStrBeforeHeight + str(height) + commandStrAfterHeight)
-    
-    tree = bpy.data.objects[2]
-    tree.active_material = makeTreeMaterial(color)
+def makeTree(treeHeight, color):
+	leafHeight = getLeafSize(treeHeight)
+	vAttract = getVerticalAttraction(color)
 
+	# Create the tree mesh.
+	eval(	commandBeforeHeight + str(treeHeight) + \
+		commandBeforeLeafSize + str(leafHeight) + \
+		commandBeforeVAttraction + str(vAttract) + \
+		commandEnding)
+    
+	leaves = bpy.data.objects[2]
+	leaves.active_material = makeLeafMaterial(color)
 
-# Make the tree's material.
+	bark = bpy.data.objects[3]
+	bark.active_material = makeBarkMaterial()
+
+# Get the leaf size corresponding to a given tree height.
+# 
+# Param treeHeight: The height of the tree.
+# Return: A rough size to scale the leaf to, larger for a larger tree.
+# 
+def getLeafSize(treeHeight):
+	relativeTreeScale = (treeHeight - minTreeHeight) / (maxTreeHeight - minTreeHeight)
+	leafSizeToAdd = relativeTreeScale * (maxLeafSize - minLeafSize)
+	leafSize = minLeafSize + leafSizeToAdd
+	return leafSize
+
+# Get the vertical attraction corresponding to a given tree color.
+# 
+# Param color: The tree color.
+# Return: The vertical attraction of the tree based on its color.
+# 
+def getVerticalAttraction(color):
+	relativeQualityScale = (color[0] - greenestTreeColor[0]) / (deadestTreeColor[0] - greenestTreeColor[0])
+	attractionToAdd = relativeQualityScale * (maxVertAttraction - minVertAttraction)
+	vertAttraction = maxVertAttraction - attractionToAdd
+	return vertAttraction
+
+# Make the material for the tree leaves.
 #
 # Param color: A 3-tuple indicating the tree's rgb color values.
+# Return: The material to use for the tree leaves.
 # 
-def makeTreeMaterial(color):
-    # http://blenderartists.org/forum/showthread.php?198080-How-to-color-a-object-using-python
-    treeMaterial = bpy.data.materials.new("PKHG")
+def makeLeafMaterial(color):
+	# http://blenderartists.org/forum/showthread.php?198080-How-to-color-a-object-using-python
+	leafMaterial = bpy.data.materials.new("Leaves")
     
-    treeMaterial.diffuse_color = color
-    treeMaterial.specular_color = color
+	leafMaterial.diffuse_color = color
+	leafMaterial.specular_color = color
     
-    return treeMaterial
+	return leafMaterial
+
+# Make the material for the tree bark.
+# 
+# Return: The material to use for the tree bark.
+# 
+def makeBarkMaterial():
+	# http://science-o-matics.com/2013/04/how-to-python-scripting-in-blender-2-material-und-textur/?lang=en
+
+	barkMaterial = bpy.data.materials.new("Bark")
+	barkMaterialTexture = barkMaterial.texture_slots.add()
+
+	# Get image for bark
+	barkImagePath = os.getcwd() + (os.sep) + "barkTexture" + (os.sep) + "bark.jpg"
+	barkImage = bpy.data.images.load(barkImagePath)
+
+	# Add bark texture to material
+	barkTexture = bpy.data.textures.new("barkTex", type='IMAGE')
+	barkTexture.image = barkImage
+	
+	# Link texture to material
+	barkMaterialTexture.texture = barkTexture
+	barkMaterialTexture.texture_coords = 'OBJECT'
+	barkMaterialTexture.mapping = 'FLAT'
+
+	return barkMaterial
 
 # Get the color of a tree corresponding to a particular code quality.
 # 
 # Param: quality - int indicating the code's quality
 # Return: A tuple of the (r,g,b) values for the color.
 # 
-def __getColor__(quality):
+def getColor(quality):
 	rgb = [0,1,2]
 
 	if float(quality) >= badQualityCeiling:
@@ -95,7 +161,6 @@ def __getColor__(quality):
 			rgb[i] = (colorIncrement * float(quality)) + greenestTreeColor[i]
 
 	return (rgb[0],rgb[1],rgb[2])
-
 
 
 

@@ -10,32 +10,27 @@ import os
 import sys
 import imp
 
-# Files and folders should be located in the same directory as the script.
-commitDataFileName = os.sep + "fuser" + os.sep + "output" + os.sep + "numberofcommitsoutput.txt"
-qualityDataFileName = os.sep + "fuser" + os.sep + "output" + os.sep + "codequalityoutput.txt"
-imagePath = ""
-dataPath = ""
-modulePath = ""
+commitDataFileName = "numberofcommitsoutput.txt"
+qualityDataFileName = "codequalityoutput.txt"
 
 # Update the path for loading modules, returning the path.
+# (Otherwise older versions of the file might be used, causing hours of frustration).
 # 
 def updatePaths():
-    currentPath = os.path.abspath(__file__) # http://stackoverflow.com/questions/3430372/how-to-get-full-path-of-current-directory-in-python
-    sys.path.append(currentPath)
+    currPath = os.getcwd() # https://docs.python.org/2/library/os.html#os-file-dir
+    sys.path.append(currPath)
 
-    # Add the current path's parent.
-    modulePath = os.sep.join(currentPath.split(os.sep)[0:-1])
-    if sys.path[-1] != modulePath:
+    if sys.path[-1] != currPath:
         sys.path.append(modulePath)
         
-    return modulePath
+    return currPath
 
-modulePath = updatePaths()
+currentPath = updatePaths()
 import TreeCreator
 imp.reload(TreeCreator) # http://www.blender.org/documentation/blender_python_api_2_61_0/info_tips_and_tricks.html
 
-dataPath = os.sep.join(modulePath.split(os.sep)[0:-1])
-imagePath = modulePath + os.sep + "treeFrames"
+dataPath = (os.sep).join(currentPath.split(os.sep)[0:-1]) + (os.sep) + "fuser"+(os.sep)+"output"+(os.sep)
+imagePath = currentPath + (os.sep)+"treeFrames"+(os.sep)
 
 # Retrieve the contribution and quality data from the data files.
 # Return: A 2-tuple of contribution and quality information.
@@ -51,7 +46,7 @@ def readData():
 # Return: The list of file elements, with newlines from the file seperating elements.
 # 
 def parseFile(fileName):
-    file = open(dataPath + os.sep + fileName, 'r')
+    file = open(dataPath + (os.sep) + fileName, 'r')
     into = []
     
     for line in file:
@@ -65,22 +60,23 @@ def parseFile(fileName):
 def saveScene():
     
     # http://stackoverflow.com/questions/14982836/rendering-and-saving-images-through-blender-python
-    bpy.data.scenes['Scene'].render.filepath = imagePath + os.sep + "tree" + str(i)
+    bpy.data.scenes['Scene'].render.filepath = imagePath + "/tree" + str(i)
     bpy.ops.render.render( write_still=True ) 
 
 
-# Make a single frame. 
+# Undergo the entire creation and deletion of a single frame. 
 # ie. Create a tree, render it, save the image and delete it.
 # Param contribs: The contribution parameter to affect the tree's height.
 # Param quality: The code quality to affect the tree's liveliness.
 # 
 def makeFrame(contribs, quality):
-    TreeCreator.createTree(contribs, quality)
-    bpy.data.objects[2].select = True 
+	TreeCreator.createTree(contribs, quality)
+	saveScene()
 
-    saveScene()
+	bpy.data.objects[2].select = True # Select the leaves
+	bpy.data.objects[3].select = True # Select the tree
 
-    bpy.ops.object.delete(use_global=False) # Delete tree
+	bpy.ops.object.delete(use_global=False) # Delete tree
 
 
 data = readData()
