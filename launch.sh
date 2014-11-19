@@ -30,7 +30,7 @@ cd src/visualizer
 blender treeVisualizer.blend --background --python TreeVisualizer.py
 
 cd treeFrames
-ffmpeg -framerate 1/5 -i tree%d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p TreeVideo.mp4
+ffmpeg -framerate 5 -i tree%d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p TreeVideo.mp4
 
-#Open the Video file
+# open the video file
 explorer TreeVideo.mp4

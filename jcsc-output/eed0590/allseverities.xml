@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="xsl/severity.xsl" type="text/xsl"?>
+<jcsc>
+  <rulelist>
+    <severity>All Severities</severity>
+    <rules>
+    </rules>
+  </rulelist>
+</jcsc>

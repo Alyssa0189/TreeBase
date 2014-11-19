@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="xsl/package.xsl" type="text/xsl"?>
+<jcsc>
+  <classlist>
+    <package>All Classes</package>
+    <classes>
+    </classes>
+  </classlist>
+</jcsc>

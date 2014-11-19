@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="xsl/rule.xsl" type="text/xsl"?>
+<jcsc>
+  <category>JavaDoc</category>
+  <rule>MethodDeclarationReturn</rule>
+  <violations>
+    <violation>
+      <rule>
+        <name>MethodDeclarationReturn</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>GreetingServiceImpl</classname>
+      <package>cs310.creativeteamname.server</package>
+      <line>14</line>
+      <column>56</column>
+      <message><![CDATA[public method declaration JavaDoc does not provide the required '@return' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\server\GreetingServiceImpl.java</source>
+    </violation>
+  </violations>
+</jcsc>

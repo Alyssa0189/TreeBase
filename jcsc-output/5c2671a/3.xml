@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="xsl/severity.xsl" type="text/xsl"?>
+<jcsc>
+  <rulelist>
+    <severity>3</severity>
+    <rules>
+      <rule>
+        <name>LineLength</name>
+        <severity>3</severity>
+        <category>General</category>
+      </rule>
+      <rule>
+        <name>MethodDeclarationParam</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <rule>
+        <name>MethodDeclarationReturn</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <rule>
+        <name>MethodDeclarationThrows</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <rule>
+        <name>MethodJavaDocPublic</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <rule>
+        <name>TabsAllowed</name>
+        <severity>3</severity>
+        <category>General</category>
+      </rule>
+      <rule>
+        <name>TypeDeclarationAuthor</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+    </rules>
+  </rulelist>
+</jcsc>

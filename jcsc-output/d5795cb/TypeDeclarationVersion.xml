@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="xsl/rule.xsl" type="text/xsl"?>
+<jcsc>
+  <category>JavaDoc</category>
+  <rule>TypeDeclarationVersion</rule>
+  <violations>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>10</line>
+      <column>8</column>
+      <message><![CDATA[interface Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\GreetingService.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>8</line>
+      <column>8</column>
+      <message><![CDATA[interface Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\GreetingServiceAsync.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>7</line>
+      <column>8</column>
+      <message><![CDATA[interface Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\LoginService.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>3</line>
+      <column>8</column>
+      <message><![CDATA[interface Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\LoginServiceAsync.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>28</line>
+      <column>8</column>
+      <message><![CDATA[class Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\ParkFinder.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>94</line>
+      <column>17</column>
+      <message><![CDATA[class Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\ParkFinder.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.server</package>
+      <line>11</line>
+      <column>8</column>
+      <message><![CDATA[class Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\server\GreetingServiceImpl.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>TypeDeclarationVersion</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>null</classname>
+      <package>cs310.creativeteamname.shared</package>
+      <line>23</line>
+      <column>8</column>
+      <message><![CDATA[class Declaration JavaDoc does not provide the required '@version' tag]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\shared\FieldVerifier.java</source>
+    </violation>
+  </violations>
+</jcsc>

@@ -1,4 +1,4 @@
-###How to run our project
+###How to run our project:
   
 Our project requires the following dependencies:  
   
@@ -17,5 +17,19 @@ Example:  `./launch.sh square dagger`
 - - - -
   
 ###Links to code bases:
+  
 https://github.com/square/dagger - a fast dependency injector for Android and Java with 629 commits and 28 contributors  
 https://github.com/tiffanyyy/cs310 - a CPSC 310 project with 115 commits and 4 contributors
+  
+- - - -
+  
+### Sample outputs:
+  
+Sample outputs from analyzing the CSPS 310 code base can be found in the following locations:  
+
+    jcsc-output
+    src/gitHubParser/output
+    src/fuser/output
+    src/visualizer/treeFrames
+  
+Note for JCSC: due to the large number of files generated, only the results of analyzing the first ten commits are provided here.

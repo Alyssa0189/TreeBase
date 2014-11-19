@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="xsl/rule.xsl" type="text/xsl"?>
+<jcsc>
+  <category>JavaDoc</category>
+  <rule>MethodDeclarationParam</rule>
+  <violations>
+    <violation>
+      <rule>
+        <name>MethodDeclarationParam</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>MyHandler</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>98</line>
+      <column>61</column>
+      <message><![CDATA[public method declaration JavaDoc does not provide the required '@param' tag for all parameters]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\ParkFinder.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>MethodDeclarationParam</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>MyHandler</classname>
+      <package>cs310.creativeteamname.client</package>
+      <line>105</line>
+      <column>61</column>
+      <message><![CDATA[public method declaration JavaDoc does not provide the required '@param' tag for all parameters]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\ParkFinder.java</source>
+    </violation>
+    <violation>
+      <rule>
+        <name>MethodDeclarationParam</name>
+        <severity>3</severity>
+        <category>JavaDoc</category>
+      </rule>
+      <classname>GreetingServiceImpl</classname>
+      <package>cs310.creativeteamname.server</package>
+      <line>14</line>
+      <column>56</column>
+      <message><![CDATA[public method declaration JavaDoc does not provide the required '@param' tag for all parameters]]></message>
+      <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\server\GreetingServiceImpl.java</source>
+    </violation>
+  </violations>
+</jcsc>

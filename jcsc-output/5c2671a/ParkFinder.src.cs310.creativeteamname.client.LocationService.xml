@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet href="xsl/class.xsl" type="text/xsl"?>
+<jcsc>
+  <package>cs310.creativeteamname.client</package>
+  <class>LocationService</class>
+  <methods>0</methods>
+  <author><![CDATA[]]></author>
+  <count>2</count>
+  <ncss>4</ncss>
+  <lines>8</lines>
+  <unittestclasses>0</unittestclasses>
+  <unittests>0</unittests>
+  <violation>
+    <rule>
+      <name>TypeDeclarationAuthor</name>
+      <severity>3</severity>
+      <category>JavaDoc</category>
+    </rule>
+    <classname>null</classname>
+    <package>cs310.creativeteamname.client</package>
+    <line>6</line>
+    <column>8</column>
+    <message><![CDATA[interface Declaration JavaDoc does not provide the required '@author' tag]]></message>
+    <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\LocationService.java</source>
+  </violation>
+  <violation>
+    <rule>
+      <name>TypeDeclarationVersion</name>
+      <severity>3</severity>
+      <category>JavaDoc</category>
+    </rule>
+    <classname>null</classname>
+    <package>cs310.creativeteamname.client</package>
+    <line>6</line>
+    <column>8</column>
+    <message><![CDATA[interface Declaration JavaDoc does not provide the required '@version' tag]]></message>
+    <source>C:\Users\Tiffany\Documents\workspace\cpsc410\CreativeTeamName\codebase\ParkFinder\src\cs310\creativeteamname\client\LocationService.java</source>
+  </violation>
+</jcsc>
