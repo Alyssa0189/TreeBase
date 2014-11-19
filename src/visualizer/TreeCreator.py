@@ -12,23 +12,23 @@ minTreeHeight = 1.0
 maxTreeHeight = 12.0
 contribCeiling = 350.0   # This number of contributions or higher will result in the tallest tree.
 
-greenestTreeColor = (0.0, 0.588, 0.0)
-deadestTreeColor = (0.41176, 0.22353, 0.02353)
+greenestTreeColor = (0.0, 0.85, 0.0)
+deadestTreeColor = (0.411765, 0.188235, 0.015686)
 badQualityCeiling = 6000.0    # Code of quality this bad or greater will result in the deadest tree.
 
 # Leaf sizes which change with the tree height (since they scale seperately)
-minLeafSize = 0.07
-maxLeafSize = 0.20
+minLeafSize = 0.06
+maxLeafSize = 0.25
 
 # Vertical attraction of tree dependent on quality
-minVertAttraction = -1.0
+minVertAttraction = -1.2
 maxVertAttraction = 0.5
 
 
 # Set the command which will create a single tree.
 
 commandBeforeHeight = "bpy.ops.curve.tree_add(do_update=True, chooseSet='3', bevel=True, prune=False, showLeaves=True,\
- useArm=False, seed=0, handleType='1', levels=3, length=(1, 0.32, 0.6, 0.45), lengthV=(0, 0, 0, 0), branches=(0, 70, 20, 9),\
+ useArm=False, seed=0, handleType='1', levels=3, length=(1, 0.32, 0.6, 0.45), lengthV=(0, 0, 0, 0), branches=(0, 70, 22, 9),\
  curveRes=(3, 5, 3, 1), curve=(0, -40, -40, 0), curveV=(20, 50, 75, 0), curveBack=(0, 0, 0, 0), baseSplits=0, segSplits=(0,\
  0, 0.03, 0), splitAngle=(0, -0.09, 0, 0), splitAngleV=(0, -0.03, 0, 0), scale="
 

@@ -9,6 +9,7 @@ import bpy
 import os
 import sys
 import imp
+import logging
 
 commitDataFileName = "numberofcommitsoutput.txt"
 qualityDataFileName = "codequalityoutput.txt"
@@ -71,10 +72,11 @@ def saveScene():
 # 
 def makeFrame(contribs, quality):
 	TreeCreator.createTree(contribs, quality)
-	saveScene()
-
+	
 	bpy.data.objects[2].select = True # Select the leaves
+	saveScene()
 	bpy.data.objects[3].select = True # Select the tree
+
 
 	bpy.ops.object.delete(use_global=False) # Delete tree
 
@@ -85,6 +87,9 @@ qualities = data[1]
 
 # Make each frame in turn.
 for i in range(0, len(contribs)):
-    makeFrame(contribs[i], qualities[i])
-
+	makeFrame(contribs[i], qualities[i])
+	
+	# Print percent loaded
+	percent = int(100*(i+1)/len(contribs))
+	print("\n---"+str(percent)+"%---\n")
 
