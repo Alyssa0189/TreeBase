@@ -8,12 +8,12 @@
 import bpy
 import os
 
-minTreeHeight = 1.0
-maxTreeHeight = 12.0
-contribCeiling = 350.0   # This number of contributions or higher will result in the tallest tree.
+minTreeHeight = 1.1
+maxTreeHeight = 12.5
+contribCeiling = 370.0   # This number of contributions or higher will result in the tallest tree.
 
 greenestTreeColor = (0.1529412, 0.6588235, 0.0)
-deadestTreeColor = (0.5451, 0.270588, 0.0)
+deadestTreeColor = (0.5, 0.3, 0.1)
 badQualityCeiling = 6000.0    # Code of quality this bad or greater will result in the deadest tree.
 
 # Leaf sizes which change with the tree height (since they scale seperately)
@@ -36,7 +36,7 @@ commandBeforeVAttraction = ", scaleV=3, attractUp="
 
 commandBeforeLeafSize = ", shape='2', baseSize=0.28, ratio=0.02, taper=(1, 1, 1, 1),\
  ratioPower=1.25, downAngle=(90, 59.85, 45, 45), downAngleV=(0, -50, 10, 10), rotate=(140, 140, 140, 77), rotateV=(0.03,\
- 0.09, 0, 0), scale0=1, scaleV0=0.2, pruneWidth=0.4, pruneWidthPeak=0.6, prunePowerHigh=0.5, prunePowerLow=0.001,\
+ 0.09, 0, 0), scale0=1.7, scaleV0=0.2, pruneWidth=0.4, pruneWidthPeak=0.6, prunePowerHigh=0.5, prunePowerLow=0.001,\
  pruneRatio=1, leaves=18, leafScale="
 
 commandEnding = ", leafScaleX=1, leafDist='4', bend=0, bevelRes=1, resU=4, frameRate=1, windSpeed=2, windGust=0,\
@@ -128,6 +128,7 @@ def makeBarkMaterial():
 
 	barkMaterial = bpy.data.materials.new("Bark")
 	barkMaterialTexture = barkMaterial.texture_slots.add()
+	barkMaterialTexture.use_map_normal = True
 
 	# Get image for bark
 	barkImagePath = os.getcwd() + (os.sep) + "barkTexture" + (os.sep) + "bark.jpg"
